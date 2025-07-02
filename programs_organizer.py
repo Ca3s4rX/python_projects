@@ -31,47 +31,14 @@ def get_safe(lst, index, default=None):
         return lst[index]
     except IndexError:
         return default
-
-def level_organizer(hosts_list):
-    result = {2: [], 3:[], 4: [], 5: [], 6:[], 7:[],8:[]}
-    for host in hosts_list: 
-        print('yes')
-        if '.' in host: result[len(host.split('.'))].append(host)
-    for key, hosts in result.items():
-        if key == 2: write('./2nd_hosts.txt', '\n'.join(hosts))
-        elif key == 3: write('./3rd_hosts.txt', '\n'.join(hosts))
-        elif key == 4: write('./4th_hosts.txt', '\n'.join(hosts))
-        elif key == 5: write('./5th_hosts.txt', '\n'.join(hosts))
-        elif key == 6: write('./6th_hosts.txt', '\n'.join(hosts))
-        elif key == 7: write('./7th_hosts.txt', '\n'.join(hosts))
-        elif key == 8: write('./8th_hosts.txt', '\n'.join(hosts))
-
-def hosts_analyzer(hosts_list):
-    result = {"Not Domains": [], "Domains": None}
-    hosts, tlds = [], []
-
-    for host in hosts_list:
-        if '.' in host: hosts.append(host); tlds.append(host.split('.')[-1]) 
-        else: result['Not Domains'].append(host)
-    
-    hosts_list_by_tlds = {tld:[] for tld in sorted(set(tlds))}
-    for host in hosts: hosts_list_by_tlds[host.split('.')[-1]].append(host)
-    result['Domains']=hosts_list_by_tlds
-    json_output = dumps(result, indent=2)
-    write('./out.json', json_output)
-    return
-
+        
 def is_ip(string):
     parts = string.split('.')
     if len(parts) != 4: return False
-
-    end = 4 - int(len(string.split('/')) > 1)
-
-    for part in parts[:end]:
+    for part in parts[:4 - int(len(string.split('/')) > 1)]:
         if len(part) > 3: return False
         for char in part:
             if ord(char) < 48 or ord(char) > 57: return False    
-
     return True
 
 def is_url(string):
