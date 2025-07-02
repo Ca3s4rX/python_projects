@@ -102,7 +102,7 @@ def domains_organizer(input_file, output_file='./organized_domains.json'):
     write(output_file, dumps(result, indent=4))
 
 if __name__ == "__main__":
-    if len(argv) == 1: print("Usage: python domains_organizer.py domains.txt output.json"); exit()
+    if len(argv) == 1: print("Usage: python programs_organizer.py.py domains.txt output.json"); exit()
     input_file = argv[1]
     output_file = get_safe(argv, 2, 'organized_domain.json')
     domains_organizer(input_file, output_file)
