@@ -129,7 +129,7 @@ def bypasser(url):
         delay = websites[host]['delay']
         print(f'[+] Sleep {delay} sec')
         sleep(delay)
-        second_request(data)
+        second_request(data, host)
 
 if __name__ == "__main__":
     if len(argv) == 1: 
