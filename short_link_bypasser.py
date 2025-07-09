@@ -11,8 +11,8 @@ headers = {
 
 websites = {
     'linkjust.com':{
-        'referer':'https://forexrw7.com/',
         'second_url': 'https://linkjust.com/links/go',
+        'referer':'https://forexrw7.com/',
         'delay':5
     }
 }
@@ -62,7 +62,7 @@ def get_host(url):
 
 def first_request(url, host):
     global headers
-    headers['Referer']= websites[get_host(url)]['referer']
+    headers['Referer']= websites[host]['referer']
     print(f'\n[+] Sending First Request ...')
     response = http2(url, headers=headers)
     try:
@@ -95,9 +95,9 @@ def first_request(url, host):
         return []
 
 
-def second_request(data):
+def second_request(data, host):
     global headers
-    url = 'https://linkjust.com/links/go'
+    url = websites[host]['second_url']
     headers['Content-Type'] = "application/x-www-form-urlencoded; charset=UTF-8"
     headers['X-Requested-With'] = "XMLHttpRequest"
     data = {
@@ -114,13 +114,16 @@ def second_request(data):
     
     if response:
         try:
-            print(f"[=] Link: {response['response_body']['url']}\n")
+            print(f"[=] Result: {response['response_body']['url']}\n")
         except Exception as e:
             print(f'[=] Error: {e}')
             
 
 def bypasser(url):
     host = get_host(url)
+    if host not in websites: 
+        print(f'[=] You need to add {host} configurations .')
+        return
     data = first_request(url, host)
     if data:
         delay = websites[host]['delay']
@@ -130,8 +133,8 @@ def bypasser(url):
 
 if __name__ == "__main__":
     if len(argv) == 1: 
-        print('\n## Requirements: pip install httpx[http2] beautifulsoup4')
-        print("## Usage: python short_link_bypasser.py https://linkjust.com/1KEvtFiwr")
+        print('\n>===>> Requirements: pip install httpx[http2] beautifulsoup4 <<===<')
+        print(">===>> Usage: python short_link_bypasser.py https://linkjust.com/1KEvtFiwr <<===<")
         exit()
     url = argv[1]
     bypasser(url)
