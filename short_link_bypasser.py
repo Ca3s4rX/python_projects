@@ -130,7 +130,7 @@ def bypasser(url):
 
 if __name__ == "__main__":
     if len(argv) == 1: 
-        print('\n## Requirements: pip install httpx beautifulsoup4')
+        print('\n## Requirements: pip install httpx[http2] beautifulsoup4')
         print("## Usage: python short_link_bypasser.py https://linkjust.com/1KEvtFiwr")
         exit()
     url = argv[1]
